@@ -14,21 +14,19 @@ Features
 --------
 
 This plugin allows you to restrict the test types allowed to ensure they
-inherit from one of a given list of unittest classes, or are function-based
-tests. You might need this on large projects where you have custom test classes
-that developers can forget about.
+inherit from one of a given list of classes. You might need this on large
+projects where you have custom test classes that developers might forget about.
 
 
 About
 -----
 
 I developed this feature in a closed source Nose plugin whilst working on the
-main Django project at YPlan. We had some custom enhancements and fixes on top
+big Django project at YPlan. We had some custom enhancements and fixes on top
 of the Django test classes, but developers sometimes forgot about using them
-and instead used the built-in ``unittest``/Django classes. Our solution was to
-just make the test runner blow up if it encountered non-whitelisted test types.
-
-This is a Pytest port of that plugin.
+and instead used the built-in ``unittest`` classes, or the plain Django ones.
+Our solution was to just make the test runner blow up if it encountered
+non-whitelisted test types. This is a Pytest port of that plugin.
 
 Usage
 -----

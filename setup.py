@@ -43,6 +43,7 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [
     'pytest',
+    'six',
 ]
 
 setup(
