@@ -7,7 +7,7 @@ from importlib import import_module
 import pytest
 import six
 
-__version__ = '1.0.0'
+__version__ = '2.0.0'
 
 
 def pytest_addoption(parser):
