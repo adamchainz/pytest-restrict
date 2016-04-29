@@ -17,7 +17,6 @@ This plugin allows you to restrict the test types allowed to ensure they
 inherit from one of a given list of classes. You might need this on large
 projects where you have custom test classes that developers might forget about.
 
-
 About
 -----
 
@@ -39,13 +38,13 @@ Install from pip with:
 
 Pytest will automatically find the plugin and use it when you run ``py.test``,
 however by default there are no restrictions. To restrict the test types,
-provide ``--restrict-types`` as a list of import strings to allowable test case
-base classes, for example:
+provide ``--restrict-types`` as a comma-separated list of import paths to
+allowable test case base classes, for example:
 
 .. code-block:: bash
 
     # Allow only test cases that inherit from Django
-    py.test --restrict-types django.test.TestCase django.test.SimpleTestCase
+    py.test --restrict-types django.test.TestCase,django.test.SimpleTestCase
 
 If you wish to allow function tests and other non-class test types (e.g.
 doctests), provide the special string 'None', for example:
@@ -53,4 +52,4 @@ doctests), provide the special string 'None', for example:
 .. code-block:: sh
 
     # Allow function tests and our custom tests
-    py.test --restrict-types None myproject.test.TestCase
+    py.test --restrict-types None,myproject.test.TestCase

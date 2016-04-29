@@ -114,7 +114,7 @@ def test_it_restricts_multiple_types_allowed(testdir):
                 pass
         """
     )
-    out = testdir.runpytest('--restrict-types', 'my_test_base.A', 'my_test_base.B')
+    out = testdir.runpytest('--restrict-types', 'my_test_base.A,my_test_base.B')
     out.assert_outcomes(passed=2, failed=0)
 
 
@@ -137,7 +137,7 @@ def test_it_restricts_multiple_types_not_allowed(testdir):
                 pass
         """
     )
-    out = testdir.runpytest('--restrict-types', 'my_test_base.A', 'my_test_base.B')
+    out = testdir.runpytest('--restrict-types', 'my_test_base.A,my_test_base.B')
     assert out.ret > 0
     out.stderr.fnmatch_lines([
         'ERROR: test_one.py::MyTests::test_one does not inherit from allowed pytest-restrict bases ' +

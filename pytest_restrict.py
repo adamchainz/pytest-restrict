@@ -14,18 +14,19 @@ def pytest_addoption(parser):
     group = parser.getgroup('restrict', 'Restricts the test types allowed')
     group._addoption(
         '--restrict-types', dest='restrict_types',
-        type=six.text_type, nargs='+',
+        type=six.text_type, default='',
         help="""A list of test types"""
     )
 
 
 def pytest_collection_modifyitems(session, config, items):
     restrict_types = config.getoption('restrict_types')
-
     if not restrict_types:
         return
 
-    check_type = create_check_type(restrict_types)
+    type_list = restrict_types.split(',')
+
+    check_type = create_check_type(type_list)
 
     errors = []
     for item in items:
@@ -33,7 +34,7 @@ def pytest_collection_modifyitems(session, config, items):
             errors.append(item)
 
     if errors:
-        error_msgs = [error_msg(item, restrict_types) for item in errors]
+        error_msgs = [error_msg(item, type_list) for item in errors]
         raise pytest.UsageError(*error_msgs)
 
 
