@@ -89,3 +89,57 @@ def test_it_restricts_one_function(testdir):
     out.stderr.fnmatch_lines([
         'ERROR: test_one.py::test_a does not inherit from allowed pytest-restrict bases (unittest.TestCase)'
     ])
+
+
+def test_it_restricts_multiple_types_allowed(testdir):
+    testdir.makepyfile(
+        my_test_base="""
+        from unittest import TestCase
+
+        class A(TestCase):
+            pass
+
+        class B(TestCase):
+            pass
+        """,
+        test_one="""
+        from my_test_base import A, B
+
+        class ATest(A):
+            def test_one(self):
+                pass
+
+        class BTest(B):
+            def test_one(self):
+                pass
+        """
+    )
+    out = testdir.runpytest('--restrict-types', 'my_test_base.A', 'my_test_base.B')
+    out.assert_outcomes(passed=2, failed=0)
+
+
+def test_it_restricts_multiple_types_not_allowed(testdir):
+    testdir.makepyfile(
+        my_test_base="""
+        from unittest import TestCase
+
+        class A(TestCase):
+            pass
+
+        class B(TestCase):
+            pass
+        """,
+        test_one="""
+        from unittest import TestCase
+
+        class MyTests(TestCase):
+            def test_one(self):
+                pass
+        """
+    )
+    out = testdir.runpytest('--restrict-types', 'my_test_base.A', 'my_test_base.B')
+    assert out.ret > 0
+    out.stderr.fnmatch_lines([
+        'ERROR: test_one.py::MyTests::test_one does not inherit from allowed pytest-restrict bases ' +
+        '(my_test_base.A,my_test_base.B)'
+    ])
