@@ -21,10 +21,6 @@ with codecs.open('README.rst', 'r', 'utf-8') as readme_file:
 with codecs.open('HISTORY.rst', 'r', 'utf-8') as history_file:
     history = history_file.read().replace('.. :changelog:', '')
 
-requirements = [
-    'pytest',
-    'six',
-]
 
 setup(
     name='pytest-restrict',
@@ -36,7 +32,11 @@ setup(
     url='https://github.com/adamchainz/pytest-restrict',
     py_modules=['pytest_restrict'],
     include_package_data=True,
-    install_requires=requirements,
+    install_requires=[
+        'pytest',
+        'six',
+    ],
+    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
     license="BSD",
     zip_safe=False,
     keywords='pytest, restrict, class',
