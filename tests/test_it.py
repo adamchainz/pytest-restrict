@@ -62,7 +62,7 @@ def test_it_restricts_one_class(testdir):
     out = testdir.runpytest('--restrict-types', 'unittest.TestCase')
     assert out.ret > 0
     out.stderr.fnmatch_lines([
-        'ERROR: test_one.py::TestA::()::test_a does not inherit from allowed pytest-restrict bases (unittest.TestCase)'
+        'ERROR: test_one.py::TestA::test_a does not inherit from allowed pytest-restrict bases (unittest.TestCase)'
     ])
 
 
