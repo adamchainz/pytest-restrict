@@ -36,6 +36,8 @@ Install from pip with:
 
     pip install pytest-restrict
 
+Python 3.4+ supported.
+
 Pytest will automatically find the plugin and use it when you run ``py.test``,
 however by default there are no restrictions. To restrict the test types,
 provide ``--restrict-types`` as a comma-separated list of import paths to
