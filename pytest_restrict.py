@@ -1,11 +1,6 @@
-# -*- encoding:utf-8 -*-
-from __future__ import absolute_import, division, print_function, unicode_literals
-
-import sys
 from importlib import import_module
 
 import pytest
-import six
 
 __version__ = '2.0.0'
 
@@ -14,7 +9,7 @@ def pytest_addoption(parser):
     group = parser.getgroup('restrict', 'Restricts the test types allowed')
     group._addoption(
         '--restrict-types', dest='restrict_types',
-        type=six.text_type, default='',
+        type=str, default='',
         help="""A list of test types"""
     )
 
@@ -65,15 +60,15 @@ def import_string(dotted_path):
     """
     try:
         module_path, class_name = dotted_path.rsplit('.', 1)
-    except ValueError:
+    except ValueError as err:
         msg = "%s doesn't look like a module path" % dotted_path
-        six.reraise(ImportError, ImportError(msg), sys.exc_info()[2])
+        raise ImportError(msg) from err
 
     module = import_module(module_path)
 
     try:
         return getattr(module, class_name)
-    except AttributeError:
+    except AttributeError as err:
         msg = 'Module "%s" does not define a "%s" attribute/class' % (
             module_path, class_name)
-        six.reraise(ImportError, ImportError(msg), sys.exc_info()[2])
+        raise ImportError(msg) from err
