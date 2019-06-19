@@ -8,6 +8,9 @@ pytest-restrict
 .. image:: https://img.shields.io/pypi/v/pytest-restrict.svg
         :target: https://pypi.python.org/pypi/pytest-restrict
 
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/python/black
+
 Pytest plugin to restrict the test types allowed.
 
 Features
