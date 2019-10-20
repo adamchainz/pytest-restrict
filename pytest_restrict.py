@@ -2,8 +2,6 @@ from importlib import import_module
 
 import pytest
 
-__version__ = "3.0.0"
-
 
 def pytest_addoption(parser):
     group = parser.getgroup("restrict", "Restricts the test types allowed")
