@@ -37,7 +37,7 @@ Install from pip with:
 
 .. code-block:: bash
 
-    pip install pytest-restrict
+    python -m pip install pytest-restrict
 
 Python 3.5 to 3.8 supported.
 
