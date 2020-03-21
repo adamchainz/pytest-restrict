@@ -61,3 +61,11 @@ doctests), provide the special string 'None', for example:
 
     # Allow function tests and our custom tests
     pytest --restrict-types None,myproject.test.TestCase
+
+This is most useful as a default set with ``addopts`` in your ``pytest.ini``
+(`docs <https://docs.pytest.org/en/latest/customize.html#adding-default-options>`__):
+
+.. code-block:: ini
+
+    [pytest]
+    addopts = --restrict-types django.test.TestCase,django.test.SimpleTestCase
