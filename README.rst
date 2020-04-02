@@ -2,8 +2,8 @@
 pytest-restrict
 ===============
 
-.. image:: https://img.shields.io/travis/adamchainz/pytest-restrict.svg
-        :target: https://travis-ci.org/adamchainz/pytest-restrict
+.. image:: https://github.com/adamchainz/pytest-restrict/workflows/CI/badge.svg?branch=master
+        :target: https://github.com/adamchainz/pytest-restrict/actions?workflow=CI
 
 .. image:: https://img.shields.io/pypi/v/pytest-restrict.svg
         :target: https://pypi.python.org/pypi/pytest-restrict
