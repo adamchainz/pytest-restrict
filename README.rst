@@ -3,13 +3,13 @@ pytest-restrict
 ===============
 
 .. image:: https://github.com/adamchainz/pytest-restrict/workflows/CI/badge.svg?branch=master
-        :target: https://github.com/adamchainz/pytest-restrict/actions?workflow=CI
+   :target: https://github.com/adamchainz/pytest-restrict/actions?workflow=CI
 
 .. image:: https://img.shields.io/pypi/v/pytest-restrict.svg
-        :target: https://pypi.python.org/pypi/pytest-restrict
+   :target: https://pypi.python.org/pypi/pytest-restrict
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
-    :target: https://github.com/python/black
+   :target: https://github.com/python/black
 
 Pytest plugin to restrict the test types allowed.
 
