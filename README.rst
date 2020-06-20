@@ -6,7 +6,7 @@ pytest-restrict
    :target: https://github.com/adamchainz/pytest-restrict/actions?workflow=CI
 
 .. image:: https://img.shields.io/pypi/v/pytest-restrict.svg
-   :target: https://pypi.python.org/pypi/pytest-restrict
+   :target: https://pypi.org/project/pytest-restrict/
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
    :target: https://github.com/python/black
