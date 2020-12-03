@@ -2,6 +2,8 @@ from importlib import import_module
 
 import pytest
 
+MARKER_NAME = "restricted_type"
+
 
 def pytest_addoption(parser):
     group = parser.getgroup("restrict", "Restricts the test types allowed")
@@ -10,7 +12,14 @@ def pytest_addoption(parser):
         dest="restrict_types",
         type=str,
         default="",
-        help="""A list of test types""",
+        help="A comma-separated list of paths to allowed test class bases.",
+    )
+
+
+def pytest_configure(config):
+    config.addinivalue_line(
+        "markers",
+        MARKER_NAME + ": automatically added by pytest-restrict for bad test types.",
     )
 
 
@@ -23,14 +32,15 @@ def pytest_collection_modifyitems(session, config, items):
 
     check_type = create_check_type(type_list)
 
-    errors = []
     for item in items:
         if not check_type(item):
-            errors.append(item)
+            item.add_marker(MARKER_NAME)
 
-    if errors:
-        error_msgs = [error_msg(item, type_list) for item in errors]
-        raise pytest.UsageError(*error_msgs)
+
+def pytest_runtest_setup(item):
+    marked_as_restricted = len(list(item.iter_markers(name=MARKER_NAME))) > 0
+    if marked_as_restricted:
+        pytest.fail("Test is not a type allowed by --restrict-types.")
 
 
 def create_check_type(types):
@@ -44,12 +54,6 @@ def create_check_type(types):
         return issubclass(klass, bases)
 
     return check_type
-
-
-def error_msg(item, restrict_types):
-    return "{} does not inherit from allowed pytest-restrict bases ({})".format(
-        item.nodeid, ",".join(restrict_types)
-    )
 
 
 def import_string(dotted_path):

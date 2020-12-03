@@ -60,7 +60,7 @@ however by default there are no restrictions. To restrict the test types,
 provide ``--restrict-types`` as a comma-separated list of import paths to
 allowable test case base classes, for example:
 
-.. code-block:: bash
+.. code-block:: sh
 
     # Allow only test cases that inherit from Django
     pytest --restrict-types django.test.TestCase,django.test.SimpleTestCase
