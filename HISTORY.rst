@@ -8,6 +8,11 @@ History
   allows pytest-restrict to work with pytest-xdist.
 * Error message has changed to be shorter: "Failed: Test is not a type allowed
   by --restrict-types."
+* Use Python 3.9's ``pkgutil.resolve_name()``, or its backport in the
+  `pkgutil_resolve_name
+  package <https://pypi.org/project/pkgutil_resolve_name/>`__.
+
+  Thanks Tom Grainger for the backport.
 
 3.1.0 (2019-12-19)
 ------------------
