@@ -6,6 +6,7 @@ flake8-bugbear ; python_version == '3.9.*'
 flake8-comprehensions ; python_version == '3.9.*'
 flake8-tidy-imports ; python_version == '3.9.*'
 isort ; python_version == '3.9.*'
+pkgutil_resolve_name
 pre-commit ; python_version == '3.9.*'
 pygments ; python_version == '3.9.*'
 pytest

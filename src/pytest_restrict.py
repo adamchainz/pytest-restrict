@@ -1,6 +1,11 @@
-from importlib import import_module
+import sys
 
 import pytest
+
+if sys.version_info >= (3, 9):
+    from pkgutil import resolve_name
+else:
+    from pkgutil_resolve_name import resolve_name
 
 MARKER_NAME = "restricted_type"
 
@@ -45,7 +50,7 @@ def pytest_runtest_setup(item):
 
 def create_check_type(types):
     allow_none = "None" in types
-    bases = tuple(import_string(path) for path in types if path != "None")
+    bases = tuple(resolve_name(path) for path in types if path != "None")
 
     def check_type(item):
         klass = getattr(item, "cls", None)
@@ -54,26 +59,3 @@ def create_check_type(types):
         return issubclass(klass, bases)
 
     return check_type
-
-
-def import_string(dotted_path):
-    """
-    Import a dotted module path and return the attribute/class designated by the
-    last name in the path. Raise ImportError if the import failed.
-    """
-    try:
-        module_path, class_name = dotted_path.rsplit(".", 1)
-    except ValueError as err:
-        msg = "%s doesn't look like a module path" % dotted_path
-        raise ImportError(msg) from err
-
-    module = import_module(module_path)
-
-    try:
-        return getattr(module, class_name)
-    except AttributeError as err:
-        msg = 'Module "{}" does not define a "{}" attribute/class'.format(
-            module_path,
-            class_name,
-        )
-        raise ImportError(msg) from err
