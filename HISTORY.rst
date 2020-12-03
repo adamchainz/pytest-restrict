@@ -2,6 +2,9 @@
 History
 =======
 
+4.0.0 (2020-12-03)
+------------------
+
 * Support Python 3.9.
 * Move license from BSD to MIT License.
 * Rewrite internals to use a marker and fail tests at setup time. This
