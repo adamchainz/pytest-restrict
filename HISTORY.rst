@@ -4,6 +4,10 @@ History
 
 * Support Python 3.9.
 * Move license from BSD to MIT License.
+* Rewrite internals to use a marker and fail tests at setup time. This
+  allows pytest-restrict to work with pytest-xdist.
+* Error message has changed to be shorter: "Failed: Test is not a type allowed
+  by --restrict-types."
 
 3.1.0 (2019-12-19)
 ------------------
