@@ -1,6 +1,10 @@
 import sys
+from typing import Callable, List
 
 import pytest
+from _pytest.config import Config
+from _pytest.config.argparsing import Parser
+from _pytest.nodes import Item
 
 if sys.version_info >= (3, 9):
     from pkgutil import resolve_name
@@ -10,7 +14,7 @@ else:
 MARKER_NAME = "restricted_type"
 
 
-def pytest_addoption(parser):
+def pytest_addoption(parser: Parser) -> None:
     group = parser.getgroup("restrict", "Restricts the test types allowed")
     group._addoption(
         "--restrict-types",
@@ -21,15 +25,15 @@ def pytest_addoption(parser):
     )
 
 
-def pytest_configure(config):
+def pytest_configure(config: Config) -> None:
     config.addinivalue_line(
         "markers",
         MARKER_NAME + ": automatically added by pytest-restrict for bad test types.",
     )
 
 
-def pytest_collection_modifyitems(session, config, items):
-    restrict_types = config.getoption("restrict_types")
+def pytest_collection_modifyitems(config: Config, items: List[Item]) -> None:
+    restrict_types: str = config.getoption("restrict_types")
     if not restrict_types:
         return
 
@@ -42,17 +46,17 @@ def pytest_collection_modifyitems(session, config, items):
             item.add_marker(MARKER_NAME)
 
 
-def pytest_runtest_setup(item):
+def pytest_runtest_setup(item: Item) -> None:
     marked_as_restricted = len(list(item.iter_markers(name=MARKER_NAME))) > 0
     if marked_as_restricted:
         pytest.fail("Test is not a type allowed by --restrict-types.")
 
 
-def create_check_type(types):
+def create_check_type(types: List[str]) -> Callable[[Item], bool]:
     allow_none = "None" in types
     bases = tuple(resolve_name(path) for path in types if path != "None")
 
-    def check_type(item):
+    def check_type(item: Item) -> bool:
         klass = getattr(item, "cls", None)
         if klass is None:
             return allow_none
