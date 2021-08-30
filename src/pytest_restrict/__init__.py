@@ -15,7 +15,7 @@ MARKER_NAME = "restricted_type"
 
 
 def pytest_addoption(parser: Parser) -> None:
-    group = parser.getgroup("restrict", "Restricts the test types allowed")
+    group = parser.getgroup("restrict", "pytest-restrict")
     group._addoption(
         "--restrict-types",
         dest="restrict_types",

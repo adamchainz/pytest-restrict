@@ -2,6 +2,8 @@
 History
 =======
 
+* Improve group name in ``pytest --help``.
+
 4.2.0 (2021-08-12)
 ------------------
 
