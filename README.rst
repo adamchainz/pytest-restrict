@@ -37,7 +37,7 @@ non-whitelisted test types. This is a Pytest port of that plugin.
 Installation
 ============
 
-Install from pip with:
+Install with:
 
 .. code-block:: bash
 
