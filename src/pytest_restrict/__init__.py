@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 import sys
-from typing import Callable, List
+from typing import Callable
 
 import pytest
 from _pytest.config import Config
@@ -32,7 +34,7 @@ def pytest_configure(config: Config) -> None:
     )
 
 
-def pytest_collection_modifyitems(config: Config, items: List[Item]) -> None:
+def pytest_collection_modifyitems(config: Config, items: list[Item]) -> None:
     restrict_types: str = config.getoption("restrict_types")
     if not restrict_types:
         return
@@ -52,7 +54,7 @@ def pytest_runtest_setup(item: Item) -> None:
         pytest.fail("Test is not a type allowed by --restrict-types.")
 
 
-def create_check_type(types: List[str]) -> Callable[[Item], bool]:
+def create_check_type(types: list[str]) -> Callable[[Item], bool]:
     allow_none = "None" in types
     bases = tuple(resolve_name(path) for path in types if path != "None")
 
