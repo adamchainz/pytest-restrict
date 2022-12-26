@@ -2,7 +2,7 @@
 pytest-restrict
 ===============
 
-.. image:: https://img.shields.io/github/workflow/status/adamchainz/pytest-restrict/CI/main?style=for-the-badge
+.. image:: https://img.shields.io/github/actions/workflow/status/adamchainz/pytest-restrict/main.yml?branch=main&style=for-the-badge
    :target: https://github.com/adamchainz/pytest-restrict/actions?workflow=CI
 
 .. image:: https://img.shields.io/pypi/v/pytest-restrict.svg?style=for-the-badge
