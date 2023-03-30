@@ -20,19 +20,8 @@ Pytest plugin to restrict the test types allowed.
 Features
 ========
 
-This plugin allows you to restrict the test types allowed to ensure they
-inherit from one of a given list of classes. You might need this on large
-projects where you have custom test classes that developers might forget about.
-
-About
-=====
-
-I developed this feature in a closed source Nose plugin whilst working on the
-big Django project at YPlan. We had some custom enhancements and fixes on top
-of the Django test classes, but developers sometimes forgot about using them
-and instead used the built-in ``unittest`` classes, or the plain Django ones.
-Our solution was to just make the test runner blow up if it encountered
-non-whitelisted test types. This is a Pytest port of that plugin.
+This plugin allows you to restrict the test types allowed to ensure they inherit from one of a given list of classes.
+Useful on projects where you have custom test classes that developers may forget about.
 
 Installation
 ============
@@ -55,28 +44,36 @@ Check out my book `Speed Up Your Django Tests <https://adamchainz.gumroad.com/l/
 Usage
 =====
 
-Pytest will automatically find the plugin and use it when you run ``pytest``,
-however by default there are no restrictions. To restrict the test types,
-provide ``--restrict-types`` as a comma-separated list of import paths to
-allowable test case base classes, for example:
+Pytest will automatically find the plugin and use it when you run ``pytest``, however by default there are no restrictions.
+To restrict the test types, provide ``--restrict-types`` as a comma-separated list of import paths to allowed test base classes.
+The import paths are passed to |pkgutil.resolve_name()|__, for which you should prefer the form ``<module.path>:<classname>``.
+It’s best to set ``--restrict-types`` within |addopts|__ in your pytest configuration file.
 
-.. code-block:: sh
+.. |addopts| replace:: ``addopts``
+__ https://docs.pytest.org/en/latest/reference/reference.html#confval-addopts
 
-    # Allow only test cases that inherit from Django
-    pytest --restrict-types django.test.TestCase,django.test.SimpleTestCase
+For example, to restrict tests to Django’s `test case classes <https://docs.djangoproject.com/en/stable/topics/testing/tools/#provided-test-case-classes>`__ within ``pytest.ini``:
 
-If you wish to allow function tests and other non-class test types (e.g.
-doctests), provide the special string 'None', for example:
-
-.. code-block:: sh
-
-    # Allow function tests and our custom tests
-    pytest --restrict-types None,myproject.test.TestCase
-
-This is most useful as a default set with ``addopts`` in your ``pytest.ini``
-(`docs <https://docs.pytest.org/en/latest/customize.html#adding-default-options>`__):
+.. |pkgutil.resolve_name()| replace:: ``pkgutil.resolve_name()``
+__ https://docs.python.org/3/library/pkgutil.html#pkgutil.resolve_name
 
 .. code-block:: ini
 
     [pytest]
-    addopts = --restrict-types django.test.TestCase,django.test.SimpleTestCase
+    addopts = --restrict-types django.test:SimpleTestCase
+
+To allow function tests and other non-class test types (such as doctests), provide the special string “None”:
+
+.. code-block:: ini
+
+    [pytest]
+    addopts = --restrict-types None,django.test:SimpleTestCase
+
+History
+=======
+
+I developed this feature in a closed source Nose plugin whilst working on the big Django project at YPlan.
+We had some custom enhancements and fixes on top of the Django test classes, but developers sometimes forgot about using them and instead used the built-in ``unittest`` classes, or the plain Django ones.
+Our solution was to just make the test runner error if it encountered non-whitelisted test types.
+
+This package is a pytest port of that plugin.
