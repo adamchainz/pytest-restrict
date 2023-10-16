@@ -17,6 +17,13 @@ pytest-restrict
 
 Pytest plugin to restrict the test types allowed.
 
+----
+
+**Testing a Django project?**
+Check out my book `Speed Up Your Django Tests <https://adamchainz.gumroad.com/l/suydt>`__ which covers loads of ways to write faster, more accurate tests.
+
+----
+
 Features
 ========
 
@@ -33,13 +40,6 @@ Install with:
     python -m pip install pytest-restrict
 
 Python 3.8 to 3.12 supported.
-
-----
-
-**Testing a Django project?**
-Check out my book `Speed Up Your Django Tests <https://adamchainz.gumroad.com/l/suydt>`__ which covers loads of ways to write faster, more accurate tests.
-
-----
 
 Usage
 =====
