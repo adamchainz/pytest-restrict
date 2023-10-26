@@ -4,6 +4,44 @@ requires = [
   "setuptools",
 ]
 
+[project]
+name = "pytest-restrict"
+version = "4.6.0"
+description = "Pytest plugin to restrict the test types allowed"
+readme = {file = "README.rst", content-type = "text/x-rst"}
+keywords = [
+  "class",
+  "pytest",
+  "restrict",
+]
+license = {text = "MIT"}
+authors = [{name = "Adam Johnson", email = "me@adamj.eu"}]
+requires-python = ">=3.8"
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Framework :: Pytest",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: English",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Typing :: Typed",
+]
+dependencies = [
+  "pkgutil-resolve-name",
+  "pytest",
+]
+[project.urls]
+Changelog = "https://github.com/adamchainz/pytest-restrict/blob/main/CHANGELOG.rst"
+Funding = "https://adamj.eu/books/"
+Repository = "https://github.com/adamchainz/pytest-restrict"
+[project.entry-points.pytest11]
+restrict = "pytest_restrict"
+
 [tool.black]
 target-version = ['py38']
 
