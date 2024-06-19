@@ -8,13 +8,12 @@ requires = [
 name = "pytest-restrict"
 version = "4.6.0"
 description = "Pytest plugin to restrict the test types allowed"
-readme = { file = "README.rst", content-type = "text/x-rst" }
+readme = "README.rst"
 keywords = [
   "class",
   "pytest",
   "restrict",
 ]
-license = { text = "MIT" }
 authors = [
   { name = "Adam Johnson", email = "me@adamj.eu" },
 ]
