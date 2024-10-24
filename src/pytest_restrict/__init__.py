@@ -1,17 +1,12 @@
 from __future__ import annotations
 
-import sys
+from pkgutil import resolve_name
 from typing import Callable
 
 import pytest
 from _pytest.config import Config
 from _pytest.config.argparsing import Parser
 from _pytest.nodes import Item
-
-if sys.version_info >= (3, 9):
-    from pkgutil import resolve_name
-else:
-    from pkgutil_resolve_name import resolve_name
 
 MARKER_NAME = "restricted_type"
 
