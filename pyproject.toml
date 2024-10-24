@@ -6,7 +6,7 @@ requires = [
 
 [project]
 name = "pytest-restrict"
-version = "4.6.0"
+version = "4.7.0"
 description = "Pytest plugin to restrict the test types allowed"
 readme = "README.rst"
 keywords = [
