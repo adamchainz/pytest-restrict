@@ -5,6 +5,9 @@ pytest-restrict
 .. image:: https://img.shields.io/github/actions/workflow/status/adamchainz/pytest-restrict/main.yml.svg?branch=main&style=for-the-badge
    :target: https://github.com/adamchainz/pytest-restrict/actions?workflow=CI
 
+.. image:: https://img.shields.io/badge/Coverage-100%25-success?style=for-the-badge
+   :target: https://github.com/adamchainz/pygments-git/actions?workflow=CI
+
 .. image:: https://img.shields.io/pypi/v/pytest-restrict.svg?style=for-the-badge
    :target: https://pypi.org/project/pytest-restrict/
 
