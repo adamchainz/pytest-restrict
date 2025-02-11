@@ -1,4 +1,0 @@
-coverage[toml]
-pkgutil_resolve_name
-pytest
-pytest-randomly
