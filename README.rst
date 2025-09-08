@@ -42,7 +42,7 @@ Install with:
 
     python -m pip install pytest-restrict
 
-Python 3.9 to 3.13 supported.
+Python 3.9 to 3.14 supported.
 
 Usage
 =====
