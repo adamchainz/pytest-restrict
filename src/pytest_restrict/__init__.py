@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Callable
 from pkgutil import resolve_name
-from typing import Callable
 
 import pytest
 from _pytest.config import Config
