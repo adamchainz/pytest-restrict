@@ -12,6 +12,12 @@ MARKER_NAME = "restricted_type"
 
 
 def pytest_addoption(parser: Parser) -> None:
+    parser.addini(
+        "restrict_types",
+        "A comma-separated list of paths to allowed test class bases.",
+        type="args",
+        default=None,
+    )
     group = parser.getgroup("restrict", "pytest-restrict")
     group._addoption(
         "--restrict-types",
@@ -30,13 +36,14 @@ def pytest_configure(config: Config) -> None:
 
 
 def pytest_collection_modifyitems(config: Config, items: list[Item]) -> None:
-    restrict_types: str = config.getoption("restrict_types")
-    if not restrict_types:
-        return
+    restrict_types: list[str] | None = config.getini("restrict_types")
+    if restrict_types is None:
+        restrict_types_str = config.getoption("restrict_types")
+        if not restrict_types_str:
+            return
+        restrict_types = restrict_types_str.split(",")
 
-    type_list = restrict_types.split(",")
-
-    check_type = create_check_type(type_list)
+    check_type = create_check_type(restrict_types)
 
     for item in items:
         if not check_type(item):

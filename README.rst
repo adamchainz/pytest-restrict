@@ -47,30 +47,52 @@ Python 3.10 to 3.14 supported.
 Usage
 =====
 
-Pytest will automatically find the plugin and use it when you run ``pytest``, however by default there are no restrictions.
-To restrict the test types, provide ``--restrict-types`` as a comma-separated list of import paths to allowed test base classes.
-The import paths are passed to |pkgutil.resolve_name()|__, for which you should prefer the form ``<module.path>:<classname>``.
-It’s best to set ``--restrict-types`` within |addopts|__ in your pytest configuration file.
-
-.. |addopts| replace:: ``addopts``
-__ https://docs.pytest.org/en/latest/reference/reference.html#confval-addopts
-
-For example, to restrict tests to Django’s `test case classes <https://docs.djangoproject.com/en/stable/topics/testing/tools/#provided-test-case-classes>`__ within ``pytest.ini``:
+Pytest will automatically find the plugin and use it when you run ``pytest``, but by default there are no restrictions.
+To restrict the test types, set the ``restrict_types`` configuration option or the ``--restrict-types`` command line option.
+Either takes a list of import paths to allowed test base classes, passed to |pkgutil.resolve_name()|__, for which you should prefer the form ``<module.path>:<classname>``.
 
 .. |pkgutil.resolve_name()| replace:: ``pkgutil.resolve_name()``
 __ https://docs.python.org/3/library/pkgutil.html#pkgutil.resolve_name
 
-.. code-block:: ini
+Configuration option
+--------------------
 
-    [pytest]
-    addopts = --restrict-types django.test:SimpleTestCase
+Set the ``restrict_types`` option in your `pytest configuration file <https://docs.pytest.org/en/stable/reference/customize.html>`__ to a list of strings, each being an import path to an allowed test base class.
+For example, to only allow Django’s `test case classes <https://docs.djangoproject.com/en/stable/topics/testing/tools/#provided-test-case-classes>`__ within ``pyproject.toml``:
 
-To allow function tests and other non-class test types (such as doctests), provide the special string “None”:
+.. code-block:: toml
 
-.. code-block:: ini
+    [tool.pytest]
+    restrict_types = ["django.test:SimpleTestCase"]
 
-    [pytest]
-    addopts = --restrict-types None,django.test:SimpleTestCase
+To allow function tests and other non-class test types (such as doctests), add the special string “None”:
+
+.. code-block:: toml
+
+    [tool.pytest]
+    restrict_types = ["None", "django.test:SimpleTestCase"]
+
+Command line option
+-------------------
+
+Set the ``--restrict-types`` command line option when running pytest to a comma-separated list of import paths to allowed test base classes.
+For example, to only allow Django’s `test case classes <https://docs.djangoproject.com/en/stable/topics/testing/tools/#provided-test-case-classes>`__:
+
+.. code-block:: bash
+
+    pytest --restrict-types=django.test:SimpleTestCase
+
+You can set this option in |addopts|__ in your pytest configuration file:
+
+.. code-block:: toml
+
+    [tool.pytest]
+    addopts = ["--restrict-types=django.test:SimpleTestCase"]
+
+…but in this case, it’s preferable to use the ``restrict_types`` configuration option instead.
+
+.. |addopts| replace:: ``addopts``
+__ https://docs.pytest.org/en/latest/reference/reference.html#confval-addopts
 
 History
 =======

@@ -31,7 +31,27 @@ def test_it_does_nothing_when_no_restriction_is_set(testdir):
     out.assert_outcomes(passed=4, failed=0)
 
 
-def test_it_allows_one_class(testdir):
+def test_it_allows_one_class(pytester):
+    pytester.makepyprojecttoml(
+        """
+        [tool.pytest]
+        restrict_types = ["unittest.TestCase"]
+        """
+    )
+    pytester.makepyfile(
+        test_one="""
+        from unittest import TestCase
+
+        class ATest(TestCase):
+            def test_a(self):
+                pass
+        """
+    )
+    out = pytester.runpytest()
+    out.assert_outcomes(passed=1, failed=0)
+
+
+def test_it_allows_one_class_command_line(testdir):
     testdir.makepyfile(
         test_one="""
         from unittest import TestCase
@@ -45,7 +65,28 @@ def test_it_allows_one_class(testdir):
     out.assert_outcomes(passed=1, failed=0)
 
 
-def test_it_restricts_one_class(testdir):
+def test_it_restricts_one_class(pytester):
+    pytester.makepyprojecttoml(
+        """
+        [tool.pytest]
+        restrict_types = ["unittest.TestCase"]
+        """
+    )
+    pytester.makepyfile(
+        test_one="""
+        class TestA:
+            def test_a(self):
+                pass
+        """
+    )
+    out = pytester.runpytest()
+    assert out.ret > 0
+    out.stdout.fnmatch_lines(
+        ["*Failed: Test is not a type allowed by --restrict-types."]
+    )
+
+
+def test_it_restricts_one_class_command_line(testdir):
     testdir.makepyfile(
         test_one="""
         class TestA(object):
@@ -60,7 +101,24 @@ def test_it_restricts_one_class(testdir):
     )
 
 
-def test_it_allows_one_function(testdir):
+def test_it_allows_one_function(pytester):
+    pytester.makepyprojecttoml(
+        """
+        [tool.pytest]
+        restrict_types = ["None"]
+        """
+    )
+    pytester.makepyfile(
+        test_one="""
+        def test_a():
+            pass
+        """
+    )
+    out = pytester.runpytest()
+    out.assert_outcomes(passed=1, failed=0)
+
+
+def test_it_allows_one_function_command_line(testdir):
     testdir.makepyfile(
         test_one="""
         def test_a():
@@ -71,7 +129,27 @@ def test_it_allows_one_function(testdir):
     out.assert_outcomes(passed=1, failed=0)
 
 
-def test_it_restricts_one_function(testdir):
+def test_it_restricts_one_function(pytester):
+    pytester.makepyprojecttoml(
+        """
+        [tool.pytest]
+        restrict_types = ["unittest.TestCase"]
+        """
+    )
+    pytester.makepyfile(
+        test_one="""
+        def test_a():
+            pass
+        """
+    )
+    out = pytester.runpytest()
+    assert out.ret > 0
+    out.stdout.fnmatch_lines(
+        ["*Failed: Test is not a type allowed by --restrict-types."]
+    )
+
+
+def test_it_restricts_one_function_command_line(testdir):
     testdir.makepyfile(
         test_one="""
         def test_a():
@@ -85,7 +163,40 @@ def test_it_restricts_one_function(testdir):
     )
 
 
-def test_it_restricts_multiple_types_allowed(testdir):
+def test_it_restricts_multiple_types_allowed(pytester):
+    pytester.makepyprojecttoml(
+        """
+        [tool.pytest]
+        restrict_types = ["my_test_base.A", "my_test_base.B"]
+        """
+    )
+    pytester.makepyfile(
+        my_test_base="""
+        from unittest import TestCase
+
+        class A(TestCase):
+            pass
+
+        class B(TestCase):
+            pass
+        """,
+        test_one="""
+        from my_test_base import A, B
+
+        class ATest(A):
+            def test_one(self):
+                pass
+
+        class BTest(B):
+            def test_one(self):
+                pass
+        """,
+    )
+    out = pytester.runpytest()
+    out.assert_outcomes(passed=2, failed=0)
+
+
+def test_it_restricts_multiple_types_allowed_command_line(testdir):
     testdir.makepyfile(
         my_test_base="""
         from unittest import TestCase
@@ -112,7 +223,39 @@ def test_it_restricts_multiple_types_allowed(testdir):
     out.assert_outcomes(passed=2, failed=0)
 
 
-def test_it_restricts_multiple_types_not_allowed(testdir):
+def test_it_restricts_multiple_types_not_allowed(pytester):
+    pytester.makepyprojecttoml(
+        """
+        [tool.pytest]
+        restrict_types = ["my_test_base.A", "my_test_base.B"]
+        """
+    )
+    pytester.makepyfile(
+        my_test_base="""
+        from unittest import TestCase
+
+        class A(TestCase):
+            pass
+
+        class B(TestCase):
+            pass
+        """,
+        test_one="""
+        from unittest import TestCase
+
+        class MyTests(TestCase):
+            def test_one(self):
+                pass
+        """,
+    )
+    out = pytester.runpytest()
+    assert out.ret > 0
+    out.stdout.fnmatch_lines(
+        ["*Failed: Test is not a type allowed by --restrict-types."]
+    )
+
+
+def test_it_restricts_multiple_types_not_allowed_command_line(testdir):
     testdir.makepyfile(
         my_test_base="""
         from unittest import TestCase
