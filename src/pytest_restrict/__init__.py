@@ -51,9 +51,9 @@ def pytest_collection_modifyitems(config: Config, items: list[Item]) -> None:
 
 
 def pytest_runtest_setup(item: Item) -> None:
-    marked_as_restricted = len(list(item.iter_markers(name=MARKER_NAME))) > 0
-    if marked_as_restricted:
-        pytest.fail("Test is not a type allowed by --restrict-types.")
+    for marker in item.own_markers:
+        if marker.name == MARKER_NAME:
+            pytest.fail("Test is not allowed by pytest-restrict configuration.")
 
 
 def create_check_type(types: list[str]) -> Callable[[Item], bool]:
