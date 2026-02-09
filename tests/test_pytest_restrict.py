@@ -242,8 +242,10 @@ def test_it_restricts_multiple_types_not_allowed(pytester):
         """,
         test_one="""
         from unittest import TestCase
+        import pytest
 
         class MyTests(TestCase):
+            @pytest.mark.cool
             def test_one(self):
                 pass
         """,
