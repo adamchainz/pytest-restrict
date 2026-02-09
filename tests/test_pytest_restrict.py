@@ -82,7 +82,7 @@ def test_it_restricts_one_class(pytester):
     out = pytester.runpytest()
     assert out.ret > 0
     out.stdout.fnmatch_lines(
-        ["*Failed: Test is not a type allowed by --restrict-types."]
+        ["*Failed: Test is not allowed by pytest-restrict configuration."]
     )
 
 
@@ -97,7 +97,7 @@ def test_it_restricts_one_class_command_line(pytester):
     out = pytester.runpytest("--restrict-types", "unittest.TestCase")
     assert out.ret > 0
     out.stdout.fnmatch_lines(
-        ["*Failed: Test is not a type allowed by --restrict-types."]
+        ["*Failed: Test is not allowed by pytest-restrict configuration."]
     )
 
 
@@ -145,7 +145,7 @@ def test_it_restricts_one_function(pytester):
     out = pytester.runpytest()
     assert out.ret > 0
     out.stdout.fnmatch_lines(
-        ["*Failed: Test is not a type allowed by --restrict-types."]
+        ["*Failed: Test is not allowed by pytest-restrict configuration."]
     )
 
 
@@ -159,7 +159,7 @@ def test_it_restricts_one_function_command_line(pytester):
     out = pytester.runpytest("--restrict-types", "unittest.TestCase")
     assert out.ret > 0
     out.stdout.fnmatch_lines(
-        ["*Failed: Test is not a type allowed by --restrict-types."]
+        ["*Failed: Test is not allowed by pytest-restrict configuration."]
     )
 
 
@@ -251,7 +251,7 @@ def test_it_restricts_multiple_types_not_allowed(pytester):
     out = pytester.runpytest()
     assert out.ret > 0
     out.stdout.fnmatch_lines(
-        ["*Failed: Test is not a type allowed by --restrict-types."]
+        ["*Failed: Test is not allowed by pytest-restrict configuration."]
     )
 
 
@@ -277,5 +277,5 @@ def test_it_restricts_multiple_types_not_allowed_command_line(pytester):
     out = pytester.runpytest("--restrict-types", "my_test_base.A,my_test_base.B")
     assert out.ret > 0
     out.stdout.fnmatch_lines(
-        ["*Failed: Test is not a type allowed by --restrict-types."]
+        ["*Failed: Test is not allowed by pytest-restrict configuration."]
     )

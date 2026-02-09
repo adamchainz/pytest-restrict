@@ -5,6 +5,8 @@ Changelog
 * Support a pytest configuration file option, ``restrict_types``.
   This is now the recommended approach to set the allowed test types.
 
+* Optimize restriction check significantly.
+
 * Drop Python 3.9 support.
 
 4.8.0 (2025-09-09)
