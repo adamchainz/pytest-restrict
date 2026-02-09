@@ -2,6 +2,9 @@
 Changelog
 =========
 
+4.9.0 (2026-02-09)
+------------------
+
 * Support a pytest configuration file option, ``restrict_types``.
   This is now the recommended approach to set the allowed test types.
 
