@@ -3,8 +3,8 @@ from __future__ import annotations
 pytest_plugins = ["pytester"]
 
 
-def test_it_does_nothing_when_no_restriction_is_set(testdir):
-    testdir.makepyfile(
+def test_it_does_nothing_when_no_restriction_is_set(pytester):
+    pytester.makepyfile(
         test_one="""
         from unittest import TestCase
 
@@ -27,7 +27,7 @@ def test_it_does_nothing_when_no_restriction_is_set(testdir):
             return 1
         """
     )
-    out = testdir.runpytest("--doctest-modules")
+    out = pytester.runpytest("--doctest-modules")
     out.assert_outcomes(passed=4, failed=0)
 
 
@@ -51,8 +51,8 @@ def test_it_allows_one_class(pytester):
     out.assert_outcomes(passed=1, failed=0)
 
 
-def test_it_allows_one_class_command_line(testdir):
-    testdir.makepyfile(
+def test_it_allows_one_class_command_line(pytester):
+    pytester.makepyfile(
         test_one="""
         from unittest import TestCase
 
@@ -61,7 +61,7 @@ def test_it_allows_one_class_command_line(testdir):
                 pass
         """
     )
-    out = testdir.runpytest("--restrict-types", "unittest.TestCase")
+    out = pytester.runpytest("--restrict-types", "unittest.TestCase")
     out.assert_outcomes(passed=1, failed=0)
 
 
@@ -86,15 +86,15 @@ def test_it_restricts_one_class(pytester):
     )
 
 
-def test_it_restricts_one_class_command_line(testdir):
-    testdir.makepyfile(
+def test_it_restricts_one_class_command_line(pytester):
+    pytester.makepyfile(
         test_one="""
         class TestA:
             def test_a(self):
                 pass
         """
     )
-    out = testdir.runpytest("--restrict-types", "unittest.TestCase")
+    out = pytester.runpytest("--restrict-types", "unittest.TestCase")
     assert out.ret > 0
     out.stdout.fnmatch_lines(
         ["*Failed: Test is not a type allowed by --restrict-types."]
@@ -118,14 +118,14 @@ def test_it_allows_one_function(pytester):
     out.assert_outcomes(passed=1, failed=0)
 
 
-def test_it_allows_one_function_command_line(testdir):
-    testdir.makepyfile(
+def test_it_allows_one_function_command_line(pytester):
+    pytester.makepyfile(
         test_one="""
         def test_a():
             pass
         """
     )
-    out = testdir.runpytest("--restrict-types", "None")
+    out = pytester.runpytest("--restrict-types", "None")
     out.assert_outcomes(passed=1, failed=0)
 
 
@@ -149,14 +149,14 @@ def test_it_restricts_one_function(pytester):
     )
 
 
-def test_it_restricts_one_function_command_line(testdir):
-    testdir.makepyfile(
+def test_it_restricts_one_function_command_line(pytester):
+    pytester.makepyfile(
         test_one="""
         def test_a():
             pass
         """
     )
-    out = testdir.runpytest("--restrict-types", "unittest.TestCase")
+    out = pytester.runpytest("--restrict-types", "unittest.TestCase")
     assert out.ret > 0
     out.stdout.fnmatch_lines(
         ["*Failed: Test is not a type allowed by --restrict-types."]
@@ -196,8 +196,8 @@ def test_it_restricts_multiple_types_allowed(pytester):
     out.assert_outcomes(passed=2, failed=0)
 
 
-def test_it_restricts_multiple_types_allowed_command_line(testdir):
-    testdir.makepyfile(
+def test_it_restricts_multiple_types_allowed_command_line(pytester):
+    pytester.makepyfile(
         my_test_base="""
         from unittest import TestCase
 
@@ -219,7 +219,7 @@ def test_it_restricts_multiple_types_allowed_command_line(testdir):
                 pass
         """,
     )
-    out = testdir.runpytest("--restrict-types", "my_test_base.A,my_test_base.B")
+    out = pytester.runpytest("--restrict-types", "my_test_base.A,my_test_base.B")
     out.assert_outcomes(passed=2, failed=0)
 
 
@@ -255,8 +255,8 @@ def test_it_restricts_multiple_types_not_allowed(pytester):
     )
 
 
-def test_it_restricts_multiple_types_not_allowed_command_line(testdir):
-    testdir.makepyfile(
+def test_it_restricts_multiple_types_not_allowed_command_line(pytester):
+    pytester.makepyfile(
         my_test_base="""
         from unittest import TestCase
 
@@ -274,7 +274,7 @@ def test_it_restricts_multiple_types_not_allowed_command_line(testdir):
                 pass
         """,
     )
-    out = testdir.runpytest("--restrict-types", "my_test_base.A,my_test_base.B")
+    out = pytester.runpytest("--restrict-types", "my_test_base.A,my_test_base.B")
     assert out.ret > 0
     out.stdout.fnmatch_lines(
         ["*Failed: Test is not a type allowed by --restrict-types."]
