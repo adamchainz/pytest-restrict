@@ -15,7 +15,7 @@ def test_it_does_nothing_when_no_restriction_is_set(testdir):
             def test_a(self):
                 pass
 
-        class TestB(object):
+        class TestB:
             def test_a(self):
                 pass
 
@@ -89,7 +89,7 @@ def test_it_restricts_one_class(pytester):
 def test_it_restricts_one_class_command_line(testdir):
     testdir.makepyfile(
         test_one="""
-        class TestA(object):
+        class TestA:
             def test_a(self):
                 pass
         """
