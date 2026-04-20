@@ -45,7 +45,7 @@ entry-points.pytest11.restrict = "pytest_restrict"
 test = [
   "coverage[toml]",
   "pkgutil-resolve-name",
-  "pytest",
+  "pytest>=9",
   "pytest-randomly",
 ]
 
@@ -102,11 +102,7 @@ warn_unreachable = true
 overrides = [ { module = "tests.*", allow_untyped_defs = true } ]
 
 [tool.pytest]
-ini_options.addopts = """\
-    --strict-config
-    --strict-markers
-    """
-ini_options.xfail_strict = true
+strict = true
 
 [tool.coverage]
 run.branch = true

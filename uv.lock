@@ -239,7 +239,7 @@ requires-dist = [{ name = "pytest" }]
 test = [
     { name = "coverage", extras = ["toml"] },
     { name = "pkgutil-resolve-name" },
-    { name = "pytest" },
+    { name = "pytest", specifier = ">=9" },
     { name = "pytest-randomly" },
 ]
 
